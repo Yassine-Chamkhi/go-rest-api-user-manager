@@ -1,0 +1,4 @@
+development:
+    dialect: postgres
+    datasource: host=localhost dbname=onboardingdb user=yassine_target password=yassine_pwd123 sslmode=disable
+    dir: migrations/postgres
