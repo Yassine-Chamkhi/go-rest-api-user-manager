@@ -78,7 +78,7 @@ func TestAddUser(t *testing.T) {
 	}
 
 	rows := sqlmock.NewRows([]string{"Id", "Name", "Age"}).AddRow(insertedUser.Id, insertedUser.Name, insertedUser.Age)
-	query := regexp.QuoteMeta(`INSERT INTO people (name, age) VALUES ('$1', $2) RETURNING id, name, age;`)
+	query := regexp.QuoteMeta(`INSERT INTO people (name, age) VALUES ($1, $2) RETURNING id, name, age;`)
 	mock.ExpectQuery(query).WithArgs(insertedUser.Name, insertedUser.Age).WillReturnRows(rows)
 
 	repo := UserRepository{Db: db}

@@ -18,6 +18,7 @@ type Server struct {
 }
 
 func (srv *Server) InitRoutes() {
+	srv.Router.GET("/", srv.HTTPHandler.Greet())
 	srv.Router.GET("/users/:id", srv.HTTPHandler.GetUserFromPath())
 	srv.Router.GET("/users", srv.HTTPHandler.GetAllUsers())
 	srv.Router.POST("/users", srv.HTTPHandler.PostUser())

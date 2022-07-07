@@ -27,7 +27,6 @@ func ConnectToDatabase() (*sql.DB, error) {
 
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
 	}
 
 	dbHost := os.Getenv("DATABASE_HOST")
@@ -74,7 +73,7 @@ func (repo *UserRepository) GetAllUsers() (users []models.User, err error) {
 
 func (repo *UserRepository) AddUser(user models.User) (returnedUser models.User, err error) {
 
-	err = repo.Db.QueryRow("INSERT INTO people (name, age) VALUES ('$1', $2) RETURNING id, name, age;", user.Name, user.Age).Scan(&returnedUser.Id, &returnedUser.Name, &returnedUser.Age)
+	err = repo.Db.QueryRow("INSERT INTO people (name, age) VALUES ($1, $2) RETURNING id, name, age;", user.Name, user.Age).Scan(&returnedUser.Id, &returnedUser.Name, &returnedUser.Age)
 	if err != nil {
 		fmt.Println(err)
 		return

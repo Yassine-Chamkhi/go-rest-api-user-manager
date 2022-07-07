@@ -12,6 +12,7 @@ import (
 )
 
 type UserHandlerInterface interface {
+	Greet() func(c *gin.Context)
 	GetUserFromPath() func(c *gin.Context)
 	GetAllUsers() func(c *gin.Context)
 	PostUser() func(c *gin.Context)
@@ -20,6 +21,13 @@ type UserHandlerInterface interface {
 
 type UserHandler struct {
 	UserSvc services.UserServiceInterface
+}
+
+func (h *UserHandler) Greet() func(c *gin.Context) {
+	return func(c *gin.Context) {
+
+		c.JSON(http.StatusOK, "Welcome, app has started")
+	}
 }
 
 func (h *UserHandler) GetUserFromPath() func(c *gin.Context) {
