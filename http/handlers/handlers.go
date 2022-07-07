@@ -74,20 +74,6 @@ func (h *UserHandler) PostUser() func(c *gin.Context) {
 			return
 		}
 
-		if user.Name == "" {
-			err := errors.New("name property not specified")
-			fmt.Println(err)
-			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
-			return
-		}
-
-		if user.Age == 0 {
-			err := errors.New("age property not specified")
-			fmt.Println(err)
-			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
-			return
-		}
-
 		user, err = h.UserSvc.AddUser(user)
 
 		if err != nil {

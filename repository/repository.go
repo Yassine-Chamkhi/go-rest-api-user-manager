@@ -72,9 +72,9 @@ func (repo *UserRepository) GetAllUsers() (users []models.User, err error) {
 	return
 }
 
-func (repo *UserRepository) AddUser(user models.User) (addedUser models.User, err error) {
+func (repo *UserRepository) AddUser(user models.User) (returnedUser models.User, err error) {
 
-	err = repo.Db.QueryRow("INSERT INTO people (name, age) VALUES ('$1', $2) RETURNING id, name, age;", user.Name, user.Age).Scan(&addedUser.Id, &addedUser.Name, &addedUser.Age)
+	err = repo.Db.QueryRow("INSERT INTO people (name, age) VALUES ('$1', $2) RETURNING id, name, age;", user.Name, user.Age).Scan(&returnedUser.Id, &returnedUser.Name, &returnedUser.Age)
 	if err != nil {
 		fmt.Println(err)
 		return

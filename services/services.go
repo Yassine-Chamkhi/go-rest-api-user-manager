@@ -1,6 +1,8 @@
 package services
 
 import (
+	"errors"
+	"fmt"
 	"target/onboarding-assignment/models"
 	"target/onboarding-assignment/repository"
 )
@@ -24,7 +26,20 @@ func (svc *UserService) GetAllUsers() ([]models.User, error) {
 	return svc.Repo.GetAllUsers()
 }
 
-func (svc *UserService) AddUser(user models.User) (models.User, error) {
+func (svc *UserService) AddUser(user models.User) (returnedUser models.User, err error) {
+
+	if user.Name == "" {
+		err = errors.New("name property not specified")
+		fmt.Println(err)
+		return
+	}
+
+	if user.Age == 0 {
+		err = errors.New("age property not specified")
+		fmt.Println(err)
+		return
+	}
+
 	return svc.Repo.AddUser(user)
 }
 
