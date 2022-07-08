@@ -2,15 +2,15 @@ services:
   db:
     image: postgres
     env_file:
-      - /home/yassine/target/env_file.list
+      - ~/target/env_file.list
     ports:
       - '5432:5432'
     volumes:
-      - /home/yassine/target/pgdata:/var/lib/postgresql/data
+      - ~/target/pgdata:/var/lib/postgresql/data
   web:
-    image: target/onboarding-assignment:latest
+    image: yassinechamkhi/target-onboarding-assignment:latest
     env_file:
-      - /home/yassine/target/env_file.list
+      - ~/target/env_file.list
     depends_on:
       - db
     ports:
