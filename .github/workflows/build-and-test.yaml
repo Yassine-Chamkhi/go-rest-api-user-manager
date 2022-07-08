@@ -2,7 +2,7 @@ name: Go
 on: [push]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,7 +13,21 @@ jobs:
           go-version: '1.18.3'
       - name: Install dependencies
         run: go get .
-      # - name: Build
-      #   run: go build -v ./...
       - name: Test with the Go CLI
         run: go test -v -cover ./...
+        
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: yassinechamkhi/target-onboarding-assignment:latest
