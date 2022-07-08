@@ -20,6 +20,7 @@ ENV APP_NAME onboarding-assignment-app
  
 # Copy only required data into this image
 COPY --from=build-env /$APP_NAME .
+COPY ./migrations/postgres ./migrations/postgres
  
 # Expose application port
 EXPOSE 8080
