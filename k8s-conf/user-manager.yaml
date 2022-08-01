@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-manager
+  labels:
+    app: user-manager
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: user-manager
+  template:
+    metadata:
+      labels:
+        app: user-manager
+    spec:
+      containers:
+      - name: user-manager
+        image: yassinechamkhi/target-onboarding-assignment:0.0.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          exec:
+            command:
+            - ls
+            - /var/ready
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+        env:
+        - name: DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-username
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        - name: DATABASE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: database-host
+        - name: DATABASE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: database-port
+        - name: DATABASE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: database-name
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-manager-service
+spec:
+  selector:
+    app: user-manager
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000
