@@ -1,12 +1,14 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
 	"target/onboarding-assignment/http/handlers"
 	"target/onboarding-assignment/repository"
 	"target/onboarding-assignment/server"
 	"target/onboarding-assignment/services"
+	"time"
 
 	migrate "github.com/rubenv/sql-migrate"
 
@@ -14,12 +16,32 @@ import (
 )
 
 func main() {
-	//Initializing database connection
+	var conn *sql.DB
+	var err error
+
+	//Initializing database connection, attempting five times and exiting if not successfull, with 5 seconds waiting between attempts
 	fmt.Println("Connecting to database")
-	conn, err := repository.ConnectToDatabase()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(0)
+	for i := 0; i < 5; i++ {
+		conn, _ = repository.ConnectToDatabase()
+		err = conn.Ping()
+		if err != nil {
+			fmt.Println(err)
+			if i == 4 {
+				os.Exit(7)
+			}
+			time.Sleep(5 * time.Second)
+		} else {
+			fmt.Println("Connection to db success")
+
+			file, err := os.Create("/var/ready")
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println("File created successfully")
+			file.Close()
+
+			break
+		}
 	}
 	defer conn.Close()
 
@@ -41,7 +63,7 @@ func main() {
 	userService := services.UserService{Repo: &userRepo}
 	userHandler := handlers.UserHandler{UserSvc: &userService}
 	server := server.Server{HTTPHandler: &userHandler, Router: gin.Default(), Port: ":8080"}
-
 	server.InitRoutes()
 	server.Run()
+
 }

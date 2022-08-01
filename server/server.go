@@ -7,7 +7,7 @@ import (
 )
 
 type ServerInterface interface {
-	initRoutes()
+	InitRoutes()
 	Run()
 }
 
