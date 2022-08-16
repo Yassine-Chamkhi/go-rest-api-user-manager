@@ -4,6 +4,7 @@ import (
 	"target/onboarding-assignment/http/handlers"
 
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type ServerInterface interface {
@@ -18,6 +19,7 @@ type Server struct {
 }
 
 func (srv *Server) InitRoutes() {
+	srv.Router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	srv.Router.GET("/", srv.HTTPHandler.Greet())
 	srv.Router.GET("/users/:id", srv.HTTPHandler.GetUserFromPath())
 	srv.Router.GET("/users", srv.HTTPHandler.GetAllUsers())
