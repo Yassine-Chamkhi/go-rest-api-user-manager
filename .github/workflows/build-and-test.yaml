@@ -30,4 +30,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: yassinechamkhi/target-onboarding-assignment:0.0.3
+          tags: yassinechamkhi/target-onboarding-assignment:0.0.4
