@@ -9,6 +9,7 @@ import (
 	"target/onboarding-assignment/services"
 
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 type UserHandlerInterface interface {
@@ -20,19 +21,20 @@ type UserHandlerInterface interface {
 }
 
 type UserHandler struct {
-	UserSvc services.UserServiceInterface
+	UserSvc     services.UserServiceInterface
+	ReqsCounter prometheus.Counter
 }
 
 func (h *UserHandler) Greet() func(c *gin.Context) {
 	return func(c *gin.Context) {
-
+		h.ReqsCounter.Inc()
 		c.JSON(http.StatusOK, "Welcome, app has started")
 	}
 }
 
 func (h *UserHandler) GetUserFromPath() func(c *gin.Context) {
 	return func(c *gin.Context) {
-
+		h.ReqsCounter.Inc()
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil || id <= 0 {
 			fmt.Println(err)
@@ -55,7 +57,7 @@ func (h *UserHandler) GetUserFromPath() func(c *gin.Context) {
 
 func (h *UserHandler) GetAllUsers() func(c *gin.Context) {
 	return func(c *gin.Context) {
-
+		h.ReqsCounter.Inc()
 		users, err := h.UserSvc.GetAllUsers()
 
 		if err != nil {
@@ -70,7 +72,7 @@ func (h *UserHandler) GetAllUsers() func(c *gin.Context) {
 
 func (h *UserHandler) PostUser() func(c *gin.Context) {
 	return func(c *gin.Context) {
-
+		h.ReqsCounter.Inc()
 		var user models.User
 
 		err := c.ShouldBindJSON(&user)
@@ -99,6 +101,7 @@ func (h *UserHandler) DeleteUser() func(c *gin.Context) {
 		Id int `json:"id"`
 	}
 	return func(c *gin.Context) {
+		h.ReqsCounter.Inc()
 		var idObj idInt
 
 		if err := c.ShouldBindJSON(&idObj); err != nil {

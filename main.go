@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/prometheus/client_golang/prometheus"
 	"os"
 	"target/onboarding-assignment/http/handlers"
 	"target/onboarding-assignment/repository"
@@ -57,11 +58,18 @@ func main() {
 	}
 	fmt.Printf("Applied %d migrations!\n", n)
 
+	var usersRequestsCounter = prometheus.NewCounter(
+		prometheus.CounterOpts{
+			Name: "users_requests_count",
+			Help: "No of request handled by User handler",
+		},
+	)
+	prometheus.MustRegister(usersRequestsCounter)
 	//Initializing dependency chain
 	fmt.Println("Initializing dependency chain")
 	userRepo := repository.UserRepository{Db: conn}
 	userService := services.UserService{Repo: &userRepo}
-	userHandler := handlers.UserHandler{UserSvc: &userService}
+	userHandler := handlers.UserHandler{UserSvc: &userService, ReqsCounter: usersRequestsCounter}
 	server := server.Server{HTTPHandler: &userHandler, Router: gin.Default(), Port: ":8080"}
 	server.InitRoutes()
 	server.Run()
