@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-configmap
-data:
-  database-host: {{ .Release.Name }}-{{ index .Values.dbconfig "database-host"}}
-  database-port: {{ index .Values.dbconfig "database-port" | quote }}
-  database-name: {{ index .Values.dbconfig "database-name" | quote }}
