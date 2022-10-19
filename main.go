@@ -3,13 +3,14 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/prometheus/client_golang/prometheus"
+	"go-rest-api/http/handlers"
+	"go-rest-api/repository"
+	"go-rest-api/server"
+	"go-rest-api/services"
 	"os"
-	"target/onboarding-assignment/http/handlers"
-	"target/onboarding-assignment/repository"
-	"target/onboarding-assignment/server"
-	"target/onboarding-assignment/services"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
 
 	migrate "github.com/rubenv/sql-migrate"
 

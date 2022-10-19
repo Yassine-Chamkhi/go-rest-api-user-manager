@@ -1,7 +1,7 @@
 package server
 
 import (
-	"target/onboarding-assignment/http/handlers"
+	"go-rest-api/http/handlers"
 
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"

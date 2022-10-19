@@ -2,8 +2,8 @@ package services
 
 import (
 	"errors"
-	"target/onboarding-assignment/models"
-	"target/onboarding-assignment/repository/mocks"
+	"go-rest-api/models"
+	"go-rest-api/repository/mocks"
 	"testing"
 
 	"github.com/bxcodec/faker"

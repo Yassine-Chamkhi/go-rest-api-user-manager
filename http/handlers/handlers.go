@@ -3,10 +3,10 @@ package handlers
 import (
 	"errors"
 	"fmt"
+	"go-rest-api/models"
+	"go-rest-api/services"
 	"net/http"
 	"strconv"
-	"target/onboarding-assignment/models"
-	"target/onboarding-assignment/services"
 
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus"

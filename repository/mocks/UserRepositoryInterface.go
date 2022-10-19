@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	models "target/onboarding-assignment/models"
+	models "go-rest-api/models"
 
 	mock "github.com/stretchr/testify/mock"
 )

@@ -4,9 +4,9 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
+	"go-rest-api/models"
 	"math/rand"
 	"regexp"
-	"target/onboarding-assignment/models"
 	"testing"
 	"time"
 

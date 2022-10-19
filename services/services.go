@@ -3,8 +3,8 @@ package services
 import (
 	"errors"
 	"fmt"
-	"target/onboarding-assignment/models"
-	"target/onboarding-assignment/repository"
+	"go-rest-api/models"
+	"go-rest-api/repository"
 )
 
 type UserServiceInterface interface {

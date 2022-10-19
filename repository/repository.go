@@ -3,8 +3,8 @@ package repository
 import (
 	"database/sql"
 	"fmt"
+	"go-rest-api/models"
 	"os"
-	"target/onboarding-assignment/models"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/joho/godotenv"
