@@ -4,7 +4,7 @@ This is a **Golang** backend app that communicates with a **PostgreSQL** databas
 
 ## Architecture
 
-This app was built with SOLID priciples in mind. It is divided into smaller modules -eachin its own package- that interact with each other using dependencies abstracted away by interfaces.
+This app was built with SOLID priciples in mind. It is divided into smaller modules -each in its own package- that interact with each other using dependencies abstracted away by interfaces.
 - In **models** we find the User model we used.
 - The **repository** is the element responsible for communicating with the database.
 - In **services** we find the user management service, namely UserService, that uses the repository and deals with some input validation.
