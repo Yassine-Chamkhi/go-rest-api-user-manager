@@ -30,4 +30,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: yassinechamkhi/target-onboarding-assignment:0.0.4
+          tags: yassinechamkhi/go-rest-api-user-manager:0.0.1
