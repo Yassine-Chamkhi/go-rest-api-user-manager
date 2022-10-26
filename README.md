@@ -28,3 +28,6 @@ To run the app locally, you need to have a PostgreSQL database set up and runnin
 
 And then simply run ```go run .```
 You can verify the app is running by accessing the url **http://localhost:8080/** ; this will be handled by UserHandler's Greet method (The '/' endpoint is also the liveness probe used by K8s to check the app's health).
+
+## A word on infrastructure
+I created this project and deployed it (by using the helm chart from [USER MANAGER HELM](https://github.com/Yassine-Chamkhi/user-manager-helm)) to an ArgoCD deployment on GKE. In order to provision the infrastructure I used Hashicorp's [Learn Terraform - Provision a GKE Cluster](https://github.com/hashicorp/learn-terraform-provision-gke-cluster) and added the necessary Terraform configuration to deploy ArgoCD to the GKE cluster.
